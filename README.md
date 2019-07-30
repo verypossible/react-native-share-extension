@@ -8,11 +8,12 @@ This is a helper module which brings react native as an engine to drive share ex
 </p>
 
 # Features
+
 - You can share within your app:
-   - a list of images,
-   - text
-   - url
-   - messages (from whatsapp for instance, we get either the text or the image)
+  - a list of images,
+  - text
+  - url
+  - messages (from whatsapp for instance, we get either the text or the image)
 - Return an array like `[{type, value}]`
 
 # Installation
@@ -185,9 +186,7 @@ Note that while the above will prevent many apps from wrongly sharing using your
 
 For reference about `NSExtensionActivationRule` checkout [Apple's docs](https://developer.apple.com/library/content/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW8)
 
-
 - Try to build the project, it should now build successfully!
-
 
 ## Android
 
@@ -224,7 +223,7 @@ import com.facebook.react.ReactActivity;
 
 public class ShareActivity extends ReactActivity {
     @Override
-    protected String getMainComponentName() {
+    public String getMainComponentName() {
       // this is the name AppRegistry will use to launch the Share View
         return "MyShareEx";
     }
@@ -385,7 +384,7 @@ and in `values/styles.xml`
 - Now you should be able to compile the code without any errors!
 
 > If you need to add more packages to your share extension, do not override
-`getPackages`, instead override the `getMorePackages` method under `ShareExActivity`.
+> `getPackages`, instead override the `getMorePackages` method under `ShareExActivity`.
 
 # Share Component
 
@@ -397,26 +396,26 @@ So in `index.ios.js` and `index.android.js` we are writing the same code:
 
 ```js
 //index.android.js
-import React from 'react'
-import { AppRegistry } from 'react-native'
+import React from "react";
+import { AppRegistry } from "react-native";
 
-import App from './app.android'
-import Share from './share.android'
+import App from "./app.android";
+import Share from "./share.android";
 
-AppRegistry.registerComponent('Sample1', () => App)
-AppRegistry.registerComponent('MyShareEx', () => Share) // TODO: Replace MyShareEx with my extension name
+AppRegistry.registerComponent("Sample1", () => App);
+AppRegistry.registerComponent("MyShareEx", () => Share); // TODO: Replace MyShareEx with my extension name
 ```
 
 ```js
 //index.ios.js
-import React from 'react'
-import { AppRegistry } from 'react-native'
+import React from "react";
+import { AppRegistry } from "react-native";
 
-import App from './app.ios'
-import Share from './share.ios'
+import App from "./app.ios";
+import Share from "./share.ios";
 
-AppRegistry.registerComponent('Sample1', () => App)
-AppRegistry.registerComponent('MyShareEx', () => Share) // TODO: Replace MyShareEx with my extension name
+AppRegistry.registerComponent("Sample1", () => App);
+AppRegistry.registerComponent("MyShareEx", () => Share); // TODO: Replace MyShareEx with my extension name
 ```
 
 So the `app.ios` and `app.android.js` refers to main app and `share.ios.js` and `share.android.js` refers to share extension.
@@ -424,7 +423,6 @@ So the `app.ios` and `app.android.js` refers to main app and `share.ios.js` and 
 # Share Extension APIs
 
 - `data()` is a function that returns a promise. Once the promise is resolved, you get two values, `type` and `value`.
-
 
 ```js
 import ShareExtension from 'react-native-share-extension'
@@ -447,7 +445,7 @@ If you wish to pass this URL back down to Swift or Objective-C for whatever reas
 func harvestImage(from imageURL: String) {
     if let imgData = FileManager.default.contents(atPath: imageURL) {
         if let img = UIImage(data: data){
-        	// Process image..
+          // Process image..
         }
     }
 }
@@ -457,13 +455,12 @@ or in Objective-C:
 
 ```smalltalk
 -(void)harvestImage:(NSString *)imageURL {
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSData *imgData = [fileManager contentsAtPath:imageURL];
-	UIImage img = [UIImage imageWithData:imgData];
-	// Process Image..
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSData *imgData = [fileManager contentsAtPath:imageURL];
+  UIImage img = [UIImage imageWithData:imgData];
+  // Process Image..
 }
 ```
-
 
 # Test on Device without dev-server
 
@@ -481,7 +478,6 @@ export NODE_BINARY=node
 <p align="center">
     <img src ="https://raw.githubusercontent.com/alinz/react-native-share-extension/master/assets/ios_step_17.png" />
 </p>
-
 
 # App and app extension bundles
 
@@ -510,6 +506,7 @@ The app extension target builds pre-loaded bundle and is copied to the app targe
 `BundleCopied` = true
 
 #### app target's "Bundle React Native code and images" phase
+
 ```
 export NODE_BINARY=node
 ../bin/react-native-xcode.sh
@@ -522,6 +519,7 @@ export NODE_BINARY=node
 `BundleForced` = true
 
 #### appShareExtension target's "Bundle React Native code and images" phase
+
 ```
 cd ../
 npm run cp-native-assets
@@ -543,6 +541,7 @@ Build time can be halved while debugging by disabling the bundle for whichever t
 `BundleEntryFilename` = 'index.js'
 
 #### app target's "Bundle React Native code and images" phase
+
 ```
 export NODE_BINARY=node
 #export ENTRY_FILENAME=index
@@ -556,6 +555,7 @@ export NODE_BINARY=node
 `BundleForced` = true
 
 #### appShareExtension target's "Bundle React Native code and images" phase
+
 ```
 cd ../
 npm run cp-native-assets
@@ -565,9 +565,11 @@ export NODE_BINARY=node
 ```
 
 # Open container app
+
 Steps needed to open the host application from the share extension.
-1) Allow your app to be opened via URL Scheme - [Learn more](https://medium.com/react-native-training/deep-linking-your-react-native-app-d87c39a1ad5e)
-2) In xcode, select share extension and go to Build Settings and set **Require Only App-Extension-Safe API** to `NO`.
+
+1. Allow your app to be opened via URL Scheme - [Learn more](https://medium.com/react-native-training/deep-linking-your-react-native-app-d87c39a1ad5e)
+2. In xcode, select share extension and go to Build Settings and set **Require Only App-Extension-Safe API** to `NO`.
 
 Then you can open your app from the share extension by calling openURL:
 
